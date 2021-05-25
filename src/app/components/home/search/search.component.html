@@ -4,10 +4,18 @@
 <mat-card>
    <form [formGroup]="flightForm">
       <mat-radio-group aria-label="Select an option" formControlName="journey">
-         <mat-radio-button *ngFor="let journeyType of journeyTypes" [value]="journeyType.value" [checked]="journeyType.checked">{{ journeyType.view }}</mat-radio-button>
+         <mat-radio-button value="oneWay" (change)="checkIfOneWay($event)">One Way Ticket</mat-radio-button>
+         <mat-radio-button value="twoWays" (change)="checkIfOneWay($event)">Two Way Tickets</mat-radio-button>
        </mat-radio-group>
-      <div *ngIf="">
-
+       <div *ngIf="isSingleTicket">
+         <label>Departure Date</label>
+         <input formControlName="departureDate" type="date" min="{{ today |date:'yyyy-MM-dd'}}">
+       </div>
+       <div *ngIf="!isSingleTicket">
+         <label>Departure Date</label>
+         <input formControlName="departureDate" type="date" min="{{ today |date:'yyyy-MM-dd'}}">
+         <label>Return Date</label>
+         <input formControlName="returnDate" type="date">
       </div>
        <p>
          <mat-form-field appearance="outline">
@@ -16,6 +24,5 @@
            <mat-hint>Hint</mat-hint>
          </mat-form-field>
        </p>
-
    </form>
 </mat-card>

@@ -8,22 +8,25 @@ import { Router } from '@angular/router';
   styleUrls: ['./search.component.scss']
 })
 export class SearchComponent implements OnInit {
-  
+  isSingleTicket: boolean = true;
+
+  today = new Date(); 
   flightForm = new FormGroup({
-    journey: new FormControl(''),
-    start: new FormControl('', [Validators.required]),
-    end: new FormControl(''),
+    journey: new FormControl('oneWay'),
+    departureDate: new FormControl([Validators.required]),
+    returnDate: new FormControl(),
     origin: new FormControl('', [Validators.required]),
     destination: new FormControl('', [Validators.required]),
   })
   
-  journeyTypes = [
-    {view: "One Way Journey", value: "oneway", checked: true},
-    {view: "Two Way Journey", value: "twoways", checked: false}
-  ];
+  constructor(private router: Router) {
+  }
 
+  checkIfOneWay(event: any) {
+    if (event.value === 'oneWay') this.isSingleTicket = true;
+    else this.isSingleTicket = false;
+  }
   
-  constructor(private router: Router) { }
 
   ngOnInit(): void {
   }
