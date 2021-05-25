@@ -10,14 +10,16 @@ import { LoginComponent } from '../login/login.component';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private router: Router, public dialog: MatDialog) { }
+  constructor(private router: Router, 
+    // public dialog: MatDialog
+    ) { }
 
-  loginPopup(): void {
-    const dialogRef = this.dialog.open(LoginComponent, {
-      height: '340px',
-      width: '300px',
-    })
-  };
+  // loginPopup(): void {
+  //   const dialogRef = this.dialog.open(LoginComponent, {
+  //     height: '340px',
+  //     width: '300px',
+  //   })
+  // };
 
   ngOnInit(): void {
   }
