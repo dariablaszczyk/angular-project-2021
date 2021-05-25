@@ -1,0 +1,21 @@
+<div>
+   <h2 class="outline">Let's fly together!</h2>
+ </div>
+<mat-card>
+   <form [formGroup]="flightForm">
+      <mat-radio-group aria-label="Select an option" formControlName="journey">
+         <mat-radio-button *ngFor="let journeyType of journeyTypes" [value]="journeyType.value" [checked]="journeyType.checked">{{ journeyType.view }}</mat-radio-button>
+       </mat-radio-group>
+      <div *ngIf="">
+
+      </div>
+       <p>
+         <mat-form-field appearance="outline">
+           <mat-label>Legacy form field</mat-label>
+           <input matInput placeholder="Placeholder">
+           <mat-hint>Hint</mat-hint>
+         </mat-form-field>
+       </p>
+
+   </form>
+</mat-card>

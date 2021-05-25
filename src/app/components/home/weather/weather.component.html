@@ -1,0 +1,17 @@
+<h4>Check the weather</h4>
+<mat-form-field appearance="fill">
+  <mat-label>City</mat-label>
+  <mat-select [(ngModel)]="selectedCity"  >
+    <mat-option (click)=showTemperature() *ngFor="let city of cities" [value]="city">
+      {{ city }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+ <div>
+   <mat-error label="error" *ngIf="errorMessage">{{ errorMessage }}</mat-error>
+ </div>
+ <img *ngIf="imageSource" [src]="imageSource">
+ <div *ngIf="temperature"> {{ temperature | number : '1.0-2'}} ºC  </div>
+ <div *ngIf="pressure"> {{ pressure }} hPa</div>
+
+

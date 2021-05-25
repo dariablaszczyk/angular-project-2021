@@ -1,0 +1,17 @@
+.form {
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   text-align: center;
+}
+
+.button {
+   margin: 9% 0;
+}
+
+.header {
+   display: flex;
+   flex-direction: row;
+   flex-wrap: wrap;
+   justify-content: left;
+}
