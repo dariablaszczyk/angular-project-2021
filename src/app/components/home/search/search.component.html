@@ -10,7 +10,7 @@
        <div *ngIf="isSingleTicket">
         <mat-form-field appearance="fill">
           <mat-label>Departure Date</mat-label>
-          <input matInput [matDatepicker]="picker" formControlName="departureDate" min="{{today|date:'dd-MM-yyyy'}}">
+          <input matInput [matDatepicker]="picker" formControlName="departureDate" [min]="today">
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker color="accent" #picker></mat-datepicker>
         </mat-form-field>
@@ -18,43 +18,60 @@
        <div *ngIf="!isSingleTicket">
         <mat-form-field appearance="fill">
           <mat-label>Enter a date range</mat-label>
-          <mat-date-range-input [rangePicker]="rangePicker">
-            <input formControlName="departureDate" matStartDate placeholder="Start date" min="{{today|date:'dd-MM-yyyy'}}">
+          <mat-date-range-input [rangePicker]="rangePicker" [min]="today">
+            <input formControlName="departureDate" matStartDate placeholder="Start date" >
             <input formControlName="returnDate" matEndDate placeholder="End date">
           </mat-date-range-input>
           <mat-datepicker-toggle matSuffix [for]="rangePicker"></mat-datepicker-toggle>
           <mat-date-range-picker #rangePicker></mat-date-range-picker>
         </mat-form-field>
-         <mat-error *ngIf="returnDate.errors?.required">
-          Both departure and return dates are required.
-        </mat-error>
+        <mat-hint>
+          <mat-error *ngIf="flightForm.errors?.noReturnDate && flightForm.touched">
+            Return date is required when traveling two ways
+          </mat-error>
+        </mat-hint>
       </div>
       <div>
-        <label >Departure City </label>
-        <select formControlName="originCity">
-        <option></option>
-        <option *ngFor="let city of cities">{{city}}</option>
-        </select>
-        <mat-error *ngIf="originCity.errors?.required && flightForm.touched">
-          Marking origin is required.
-        </mat-error>
+        <mat-form-field appearance="fill">
+          <mat-label>Departure city</mat-label>
+          <mat-select formControlName="originCity">
+            <mat-option *ngFor="let city of cities" [value]="city">
+              {{city}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-hint>
+          <mat-error *ngIf="originCity.errors?.required && originCity.touched">
+            Marking origin is required.
+          </mat-error>
+        </mat-hint>
       </div>
       <div>
-        <label >Destination City </label>
-        <select formControlName="destinationCity">
-        <option></option>
-        <option *ngFor="let city of cities">{{city}}</option>
-        </select>
-        <mat-error *ngIf="destinationCity.errors?.required && flightForm.touched">
-          Destination place is required.
-        </mat-error>
+        <mat-form-field appearance="fill">
+          <mat-label>Departure city</mat-label>
+          <mat-select formControlName="destinationCity">
+            <mat-option *ngFor="let city of cities" [value]="city">
+              {{city}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-hint>
+          <mat-error *ngIf="destinationCity.errors?.required && destinationCity.touched">
+            Destination place is required.
+          </mat-error>
+        </mat-hint>
       </div>
+      <mat-hint>
+        <mat-error *ngIf="!areCitiesDifferent()">
+          Origin and destination cities cannot be the same!
+        </mat-error>
+      </mat-hint>
       <div>
         <mat-form-field >
           <mat-label>Number of passengers</mat-label>
           <input formControlName="passengers" matInput placeholder="1"  min="1" max="8" type="number">
         </mat-form-field>
-      </div>   
+      </div>
       <button mat-fab color="accent" (click)="loginPopup()"><mat-icon>flight</mat-icon></button>
    </form>
 </mat-card>

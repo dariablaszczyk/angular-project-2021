@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import moment from 'moment'
-import { FormGroup, FormControl, Validators, FormBuilder, AbstractControl } from '@angular/forms';
+import { isRequired } from '../../../validators'
+import { FormGroup, FormControl, Validators, FormBuilder, AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog'
 import { LoginComponent } from '../../login/login.component';
 
@@ -26,11 +26,11 @@ export class SearchComponent implements OnInit {
     this.flightForm = form.group({
       'journey': 'oneWay',
       'departureDate': this.today,
-      'returnDate': '',
-      'originCity': ['', Validators.required],
-      'destinationCity': ['', Validators.required],
+      'returnDate': [null],
+      'originCity': [null, Validators.required],
+      'destinationCity': [null, Validators.required],
       'passengers': 1
-    });
+    }, {validators: isRequired});
 
     this.journey = this.flightForm.controls['journey'];
     this.departureDate = this.flightForm.controls['departureDate'];
@@ -46,16 +46,29 @@ export class SearchComponent implements OnInit {
   }
   
   ngOnInit(): void {
+ 
   }
 
   onSubmit(value: any) {
+    console.log(this.flightForm.errors);
     console.log(value)
   }
 
-  loginPopup(): void {
-    const dialogRef = this.dialog.open(LoginComponent, {
-      height: '340px',
-      width: '300px',
-    })
+  loginPopup() {
+    if (this.flightForm.valid) {
+      const dialogRef = this.dialog.open(LoginComponent, {
+        height: '340px',
+        width: '300px',
+      })
+    }
   };
+
+  areCitiesDifferent(): boolean {
+    if (this.originCity.touched && this.destinationCity.touched && this.originCity.value === this.destinationCity.value )  {
+      return false
+    } else return true
+  }
+  
+
+
 }
