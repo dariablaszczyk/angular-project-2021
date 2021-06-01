@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { isRequired } from '../../../validators'
+import { isReturnDateRequired,areCitiesDifferent } from '../../../validators'
 import { FormGroup, FormControl, Validators, FormBuilder, AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog'
 import { LoginComponent } from '../../login/login.component';
@@ -30,7 +30,7 @@ export class SearchComponent implements OnInit {
       'originCity': [null, Validators.required],
       'destinationCity': [null, Validators.required],
       'passengers': 1
-    }, {validators: isRequired});
+    }, {validators: [isReturnDateRequired, areCitiesDifferent]});
 
     this.journey = this.flightForm.controls['journey'];
     this.departureDate = this.flightForm.controls['departureDate'];
@@ -62,13 +62,4 @@ export class SearchComponent implements OnInit {
       })
     }
   };
-
-  areCitiesDifferent(): boolean {
-    if (this.originCity.touched && this.destinationCity.touched && this.originCity.value === this.destinationCity.value )  {
-      return false
-    } else return true
-  }
-  
-
-
 }

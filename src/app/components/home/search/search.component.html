@@ -62,7 +62,7 @@
         </mat-hint>
       </div>
       <mat-hint>
-        <mat-error *ngIf="!areCitiesDifferent()">
+        <mat-error *ngIf="flightForm.errors?.sameCities && flightForm.touched">
           Origin and destination cities cannot be the same!
         </mat-error>
       </mat-hint>
