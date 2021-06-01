@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import moment from 'moment'
+import { FormGroup, FormControl, Validators, FormBuilder, AbstractControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog'
-import { Router } from '@angular/router';
 import { LoginComponent } from '../../login/login.component';
 
 @Component({
@@ -14,16 +14,30 @@ export class SearchComponent implements OnInit {
   isSingleTicket: boolean = true;
   today: Date = new Date(); 
   cities = ["Warsaw", "Tokyo", "Miami"];
+  journey: AbstractControl;
+  departureDate: AbstractControl;
+  returnDate: AbstractControl;
+  originCity: AbstractControl;
+  destinationCity: AbstractControl;
+  passengers: AbstractControl;
+  
 
   constructor(form: FormBuilder,public dialog: MatDialog) {
     this.flightForm = form.group({
-      journey: 'oneWay',
-      departureDate: this.today,
-      returnDate: '',
-      originCity: 'warsaw',
-      destinationCity: 'tokyo',
-      passengers: 1
-    })
+      'journey': 'oneWay',
+      'departureDate': this.today,
+      'returnDate': '',
+      'originCity': ['', Validators.required],
+      'destinationCity': ['', Validators.required],
+      'passengers': 1
+    });
+
+    this.journey = this.flightForm.controls['journey'];
+    this.departureDate = this.flightForm.controls['departureDate'];
+    this.returnDate = this.flightForm.controls['returnDate'];
+    this.originCity = this.flightForm.controls['originCity'];
+    this.destinationCity = this.flightForm.controls['destinationCity'];
+    this.passengers = this.flightForm.controls['passengers'];
   }
   
   checkIfOneWay(event: any) {
@@ -44,6 +58,4 @@ export class SearchComponent implements OnInit {
       width: '300px',
     })
   };
-
-
 }
