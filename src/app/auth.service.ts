@@ -18,10 +18,18 @@ export class AuthService {
       )
     ) {
       this.isLogged = true;
+      localStorage.setItem('isLogged', 'true');
     } else {
       this.isLogged = false;
       this.error = true;
     }
-    return this.isLogged
+    return this.isLogged;
+  }
+
+  isLoggedIn(): boolean {
+    if (this.isLogged || localStorage.getItem('isLogged') === 'true') {
+      return true;
+    }
+    return false;
   }
 }

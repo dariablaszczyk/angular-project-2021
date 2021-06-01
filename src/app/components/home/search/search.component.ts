@@ -9,6 +9,7 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { LoginComponent } from '../../login/login.component';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/auth.service';
 
 @Component({
   selector: 'app-search',
@@ -30,7 +31,8 @@ export class SearchComponent implements OnInit {
   constructor(
     form: FormBuilder,
     public dialog: MatDialog,
-    public router: Router
+    public router: Router,
+    private auth: AuthService
   ) {
     this.flightForm = form.group(
       {
@@ -63,20 +65,29 @@ export class SearchComponent implements OnInit {
 
   onSubmit(value: any) {
     if (this.flightForm.valid) {
-      const dialogRef = this.dialog.open(LoginComponent, {
-        height: '340px',
-        width: '300px',
-        data: {
-          onLogin: () => this.handleLogin(),
-        },
-      });
+      if (!this.auth.isLoggedIn()) {
+        const dialogRef = this.dialog.open(LoginComponent, {
+          height: '340px',
+          width: '300px',
+          data: {
+            onLogin: () => this.submitFlight(),
+          },
+        });
+      } else {
+        this.submitFlight()
+      }
     }
     console.log(value);
   }
 
-  handleLogin() {
-    console.log(this.router);
-    // this.dialog.close()
-    this.router.navigate(['/details'], { queryParams: { order: 'popular' } });
+  submitFlight() {
+    const { departureDate, returnDate, ...rest } = this.flightForm.value;
+    this.router.navigate(['/details'], {
+      queryParams: {
+        departureDate: departureDate.toISOString(),
+        ...(returnDate && { returnDate: returnDate.toISOString()}),
+        rest,
+      },
+    });
   }
 }
