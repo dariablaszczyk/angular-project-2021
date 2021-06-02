@@ -16,6 +16,7 @@ import { FlightSummaryComponent } from './components/flight-summary/flight-summa
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { WeatherService } from './weather.service';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { MyDateFormatPipe } from './pipes/my-date-format.pipe';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
     FooterComponent,
     LoginComponent,
     FlightDetailsComponent,
-    FlightSummaryComponent
+    FlightSummaryComponent,
+    MyDateFormatPipe,
   ],
   imports: [
     BrowserModule,

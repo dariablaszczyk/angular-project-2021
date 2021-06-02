@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Flight } from '../../flight.interface';
+import { MyDateFormatPipe } from '../../pipes/my-date-format.pipe';
 
 @Component({
   selector: 'app-flight-details',
