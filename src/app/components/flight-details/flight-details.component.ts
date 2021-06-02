@@ -1,16 +1,28 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { Flight } from '../../flight.interface';
 
 @Component({
   selector: 'app-flight-details',
   templateUrl: './flight-details.component.html',
-  styleUrls: ['./flight-details.component.scss']
+  styleUrls: ['./flight-details.component.scss'],
 })
 export class FlightDetailsComponent implements OnInit {
+  flightInfo: Flight | undefined;
 
-  constructor(private router: Router ) { }
+  constructor(private route: ActivatedRoute) {}
 
   ngOnInit(): void {
+    this.route.queryParams.subscribe((params) => {
+      this.flightInfo = {
+        journey: params.journey,
+        departureDate: params.departureDate,
+        returnDate: params.returnDate,
+        originCity: params.originCity,
+        destinationCity: params.destinationCity,
+        passengers: params.passengers,
+      };
+      console.log(this.flightInfo);
+    });
   }
-
 }

@@ -52,8 +52,6 @@ export class SearchComponent implements OnInit {
     this.originCity = this.flightForm.controls['originCity'];
     this.destinationCity = this.flightForm.controls['destinationCity'];
     this.passengers = this.flightForm.controls['passengers'];
-
-    console.log(router);
   }
 
   checkIfOneWay(event: any) {
@@ -74,10 +72,9 @@ export class SearchComponent implements OnInit {
           },
         });
       } else {
-        this.submitFlight()
+        this.submitFlight();
       }
     }
-    console.log(value);
   }
 
   submitFlight() {
@@ -85,8 +82,8 @@ export class SearchComponent implements OnInit {
     this.router.navigate(['/details'], {
       queryParams: {
         departureDate: departureDate.toISOString(),
-        ...(returnDate && { returnDate: returnDate.toISOString()}),
-        rest,
+        ...(returnDate && { returnDate: returnDate.toISOString() }),
+        ...rest,
       },
     });
   }

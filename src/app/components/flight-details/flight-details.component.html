@@ -1,1 +1,13 @@
-<p>flight-details works!</p>
+<mat-card>
+   <mat-card-title>Flight Details</mat-card-title>
+   <div *ngIf="flightInfo">
+      <p> {{ flightInfo.departureDate }}</p>
+      <p *ngIf="flightInfo.returnDate !== undefined"> {{ flightInfo.returnDate }}</p>
+      <p> {{ flightInfo.originCity }}</p>
+      <p> {{ flightInfo.destinationCity }}</p>
+      <p> {{ flightInfo.passengers }}</p>
+   </div>
+</mat-card>
+
+
+
